@@ -35,20 +35,31 @@ export function Hamburger(props: JSX.IntrinsicElements["group"]) {
   ) as GLTFResult;
   return (
     <Center {...props} dispose={null}>
-      <mesh geometry={nodes.Patty.geometry} material={materials.Patty} />
-      <mesh geometry={nodes.Lettuce.geometry} material={materials.Lettuce} />
-      <mesh geometry={nodes.BunTop_1.geometry} material={materials.Bun} />
-      <mesh geometry={nodes.BunTop_2.geometry} material={materials.BunInside} />
-      <mesh geometry={nodes.BunBottom_1.geometry} material={materials.Bun} />
-      <mesh
-        geometry={nodes.BunBottom_2.geometry}
-        material={materials.BunInside}
-      />
-      <mesh geometry={nodes.Tomato_1.geometry} material={materials.Tomato} />
-      <mesh
-        geometry={nodes.Tomato_2.geometry}
-        material={materials.TomatoInside}
-      />
+      <group>
+        <mesh geometry={nodes.BunTop_1.geometry} material={materials.Bun} />
+        <mesh
+          geometry={nodes.BunTop_2.geometry}
+          material={materials.BunInside}
+        />
+      </group>
+
+      <group>
+        <mesh geometry={nodes.Tomato_1.geometry} material={materials.Tomato} />
+        <mesh
+          geometry={nodes.Tomato_2.geometry}
+          material={materials.TomatoInside}
+        />
+        <mesh geometry={nodes.Patty.geometry} material={materials.Patty} />
+      </group>
+
+      <group>
+        <mesh geometry={nodes.Lettuce.geometry} material={materials.Lettuce} />
+        <mesh geometry={nodes.BunBottom_1.geometry} material={materials.Bun} />
+        <mesh
+          geometry={nodes.BunBottom_2.geometry}
+          material={materials.BunInside}
+        />
+      </group>
     </Center>
   );
 }
