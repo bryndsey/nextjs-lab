@@ -8,6 +8,7 @@ import React, { useRef } from "react";
 import { Center, useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { motion } from "framer-motion-3d";
+import { MotionConfig } from "framer-motion";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -43,37 +44,53 @@ export function Hamburger({ open = false, ...rest }: HamburgerProps) {
 
   return (
     <Center {...rest} dispose={null}>
-      <motion.group
-        variants={{ open: { y: offset } }}
-        animate={open ? "open" : "closed"}
-      >
-        <mesh geometry={nodes.BunTop_1.geometry} material={materials.Bun} />
-        <mesh
-          geometry={nodes.BunTop_2.geometry}
-          material={materials.BunInside}
-        />
-      </motion.group>
+      <MotionConfig transition={{ ease: "anticipate", duration: 0.5 }}>
+        <motion.group
+          variants={{ open: { rotateZ: Math.PI * 2 } }}
+          animate={open ? "open" : "closed"}
+        >
+          <motion.group
+            variants={{ open: { y: offset } }}
+            animate={open ? "open" : "closed"}
+          >
+            <mesh geometry={nodes.BunTop_1.geometry} material={materials.Bun} />
+            <mesh
+              geometry={nodes.BunTop_2.geometry}
+              material={materials.BunInside}
+            />
+          </motion.group>
 
-      <group>
-        <mesh geometry={nodes.Tomato_1.geometry} material={materials.Tomato} />
-        <mesh
-          geometry={nodes.Tomato_2.geometry}
-          material={materials.TomatoInside}
-        />
-        <mesh geometry={nodes.Patty.geometry} material={materials.Patty} />
-      </group>
+          <group>
+            <mesh
+              geometry={nodes.Tomato_1.geometry}
+              material={materials.Tomato}
+            />
+            <mesh
+              geometry={nodes.Tomato_2.geometry}
+              material={materials.TomatoInside}
+            />
+            <mesh geometry={nodes.Patty.geometry} material={materials.Patty} />
+          </group>
 
-      <motion.group
-        variants={{ open: { y: -offset } }}
-        animate={open ? "open" : "closed"}
-      >
-        <mesh geometry={nodes.Lettuce.geometry} material={materials.Lettuce} />
-        <mesh geometry={nodes.BunBottom_1.geometry} material={materials.Bun} />
-        <mesh
-          geometry={nodes.BunBottom_2.geometry}
-          material={materials.BunInside}
-        />
-      </motion.group>
+          <motion.group
+            variants={{ open: { y: -offset } }}
+            animate={open ? "open" : "closed"}
+          >
+            <mesh
+              geometry={nodes.Lettuce.geometry}
+              material={materials.Lettuce}
+            />
+            <mesh
+              geometry={nodes.BunBottom_1.geometry}
+              material={materials.Bun}
+            />
+            <mesh
+              geometry={nodes.BunBottom_2.geometry}
+              material={materials.BunInside}
+            />
+          </motion.group>
+        </motion.group>
+      </MotionConfig>
     </Center>
   );
 }
