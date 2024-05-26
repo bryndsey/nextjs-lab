@@ -16,7 +16,8 @@ type GLTFResult = GLTF & {
     BunTop_2: THREE.Mesh;
     BunBottom_1: THREE.Mesh;
     BunBottom_2: THREE.Mesh;
-    Tomato: THREE.Mesh;
+    Tomato_1: THREE.Mesh;
+    Tomato_2: THREE.Mesh;
   };
   materials: {
     Patty: THREE.MeshStandardMaterial;
@@ -24,6 +25,7 @@ type GLTFResult = GLTF & {
     Bun: THREE.MeshStandardMaterial;
     BunInside: THREE.MeshStandardMaterial;
     Tomato: THREE.MeshStandardMaterial;
+    TomatoInside: THREE.MeshStandardMaterial;
   };
 };
 
@@ -35,13 +37,17 @@ export function Hamburger(props: JSX.IntrinsicElements["group"]) {
     <group {...props} dispose={null}>
       <mesh geometry={nodes.Patty.geometry} material={materials.Patty} />
       <mesh geometry={nodes.Lettuce.geometry} material={materials.Lettuce} />
-      <mesh geometry={nodes.Tomato.geometry} material={materials.Tomato} />
       <mesh geometry={nodes.BunTop_1.geometry} material={materials.Bun} />
       <mesh geometry={nodes.BunTop_2.geometry} material={materials.BunInside} />
       <mesh geometry={nodes.BunBottom_1.geometry} material={materials.Bun} />
       <mesh
         geometry={nodes.BunBottom_2.geometry}
         material={materials.BunInside}
+      />
+      <mesh geometry={nodes.Tomato_1.geometry} material={materials.Tomato} />
+      <mesh
+        geometry={nodes.Tomato_2.geometry}
+        material={materials.TomatoInside}
       />
     </group>
   );
