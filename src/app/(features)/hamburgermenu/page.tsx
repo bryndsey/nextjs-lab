@@ -40,26 +40,33 @@ const View = dynamic(
 );
 
 export default function Home() {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <ThreeLayout>
       <main className="flex min-h-screen flex-col items-center p-24">
         <h1 className="text-3xl font-bold text-center">Hamburger menu</h1>
-        <motion.div
-          onHoverStart={() => setIsHovered(true)}
-          onHoverEnd={() => setIsHovered(false)}
-        >
-          <View className="h-44 w-44 border">
-            <Suspense fallback={null}>
-              <Hamburger open={isHovered} />
-              <ambientLight intensity={1.25} />
-              <pointLight intensity={2} position={[0.2, 1, 1]} />
-              <OrthographicCamera makeDefault position={[0, 0, 1]} zoom={900} />
-            </Suspense>
-          </View>
-        </motion.div>
+        <HamburgerButton />
       </main>
     </ThreeLayout>
+  );
+}
+
+function HamburgerButton() {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.div
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className="relative"
+    >
+      <View className="h-44 w-44 border scale-150">
+        <Suspense fallback={null}>
+          <Hamburger open={isHovered} />
+          <ambientLight intensity={1.25} />
+          <pointLight intensity={2} position={[0.2, 1, 1]} />
+          <OrthographicCamera makeDefault position={[0, 0, 1]} zoom={1000} />
+        </Suspense>
+      </View>
+    </motion.div>
   );
 }
