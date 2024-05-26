@@ -44,22 +44,27 @@ export default function Home() {
     <ThreeLayout>
       <main className="flex min-h-screen flex-col items-center p-24">
         <h1 className="text-3xl font-bold text-center">Hamburger menu</h1>
-        <HamburgerButton />
+        <HamburgerButton className="h-44 w-44 border" />
       </main>
     </ThreeLayout>
   );
 }
 
-function HamburgerButton() {
+interface HamburgerButtonProps {
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+function HamburgerButton(props: HamburgerButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="relative"
+      {...props}
     >
-      <View className="h-44 w-44 border scale-150">
+      <View className="scale-150 w-full h-full">
         <Suspense fallback={null}>
           <Hamburger open={isHovered} />
           <ambientLight intensity={1.25} />
