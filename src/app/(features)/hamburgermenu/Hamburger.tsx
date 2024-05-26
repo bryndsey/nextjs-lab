@@ -7,6 +7,7 @@ import * as THREE from "three";
 import React, { useRef } from "react";
 import { Center, useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
+import { motion } from "framer-motion-3d";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -29,19 +30,29 @@ type GLTFResult = GLTF & {
   };
 };
 
-export function Hamburger(props: JSX.IntrinsicElements["group"]) {
+type HamburgerProps = JSX.IntrinsicElements["group"] & {
+  open?: boolean;
+};
+
+const offset = 0.025;
+
+export function Hamburger({ open = false, ...rest }: HamburgerProps) {
   const { nodes, materials } = useGLTF(
     "/assets/models/hamburger.glb"
   ) as GLTFResult;
+
   return (
-    <Center {...props} dispose={null}>
-      <group>
+    <Center {...rest} dispose={null}>
+      <motion.group
+        variants={{ open: { y: offset } }}
+        animate={open ? "open" : "closed"}
+      >
         <mesh geometry={nodes.BunTop_1.geometry} material={materials.Bun} />
         <mesh
           geometry={nodes.BunTop_2.geometry}
           material={materials.BunInside}
         />
-      </group>
+      </motion.group>
 
       <group>
         <mesh geometry={nodes.Tomato_1.geometry} material={materials.Tomato} />
@@ -52,14 +63,17 @@ export function Hamburger(props: JSX.IntrinsicElements["group"]) {
         <mesh geometry={nodes.Patty.geometry} material={materials.Patty} />
       </group>
 
-      <group>
+      <motion.group
+        variants={{ open: { y: -offset } }}
+        animate={open ? "open" : "closed"}
+      >
         <mesh geometry={nodes.Lettuce.geometry} material={materials.Lettuce} />
         <mesh geometry={nodes.BunBottom_1.geometry} material={materials.Bun} />
         <mesh
           geometry={nodes.BunBottom_2.geometry}
           material={materials.BunInside}
         />
-      </group>
+      </motion.group>
     </Center>
   );
 }

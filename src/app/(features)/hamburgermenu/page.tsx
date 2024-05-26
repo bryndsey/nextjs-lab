@@ -2,8 +2,9 @@
 
 import { ThreeLayout } from "@/components/ThreeLayout";
 import { OrthographicCamera } from "@react-three/drei";
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 const Hamburger = dynamic(
   () => import("./Hamburger").then((mod) => mod.Hamburger),
   { ssr: false }
@@ -39,18 +40,25 @@ const View = dynamic(
 );
 
 export default function Home() {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <ThreeLayout>
       <main className="flex min-h-screen flex-col items-center p-24">
         <h1 className="text-3xl font-bold text-center">Hamburger menu</h1>
-        <View className="h-44 w-44 border">
-          <Suspense fallback={null}>
-            <Hamburger />
-            <ambientLight intensity={1.25} />
-            <pointLight intensity={2} position={[0.2, 1, 1]} />
-            <OrthographicCamera makeDefault position={[0, 0, 1]} zoom={900} />
-          </Suspense>
-        </View>
+        <motion.div
+          onHoverStart={() => setIsHovered(true)}
+          onHoverEnd={() => setIsHovered(false)}
+        >
+          <View className="h-44 w-44 border">
+            <Suspense fallback={null}>
+              <Hamburger open={isHovered} />
+              <ambientLight intensity={1.25} />
+              <pointLight intensity={2} position={[0.2, 1, 1]} />
+              <OrthographicCamera makeDefault position={[0, 0, 1]} zoom={900} />
+            </Suspense>
+          </View>
+        </motion.div>
       </main>
     </ThreeLayout>
   );
