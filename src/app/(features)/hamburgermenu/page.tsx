@@ -1,15 +1,13 @@
 "use client";
 
 import { ThreeLayout } from "@/components/ThreeLayout";
-import { OrthographicCamera } from "@react-three/drei";
-import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { Suspense, useState } from "react";
-const Hamburger = dynamic(
+import { HamburgerButton } from "./HamburgerButton";
+export const Hamburger = dynamic(
   () => import("./Hamburger").then((mod) => mod.Hamburger),
   { ssr: false }
 );
-const View = dynamic(
+export const View = dynamic(
   () => import("@react-three/drei").then((mod) => mod.View),
   {
     ssr: false,
@@ -47,35 +45,5 @@ export default function Home() {
         <HamburgerButton className="h-44 w-44" />
       </main>
     </ThreeLayout>
-  );
-}
-
-interface HamburgerButtonProps {
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-function HamburgerButton(props: HamburgerButtonProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isTapped, setIsTapped] = useState(false);
-
-  return (
-    <motion.div
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      onTapStart={() => setIsTapped(true)}
-      onTap={() => setIsTapped(false)}
-      onTapCancel={() => setIsTapped(false)}
-      {...props}
-    >
-      <View className="scale-150 w-full h-full">
-        <Suspense fallback={null}>
-          <Hamburger open={isHovered} tapped={isTapped} />
-          <ambientLight intensity={1.25} />
-          <pointLight intensity={2} position={[0.2, 1, 1]} />
-          <OrthographicCamera makeDefault position={[0, 0, 1]} zoom={1000} />
-        </Suspense>
-      </View>
-    </motion.div>
   );
 }
