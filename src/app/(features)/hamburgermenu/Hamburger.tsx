@@ -33,25 +33,30 @@ type GLTFResult = GLTF & {
 
 type HamburgerProps = JSX.IntrinsicElements["group"] & {
   open?: boolean;
+  tapped?: boolean;
 };
 
 const offset = 0.025;
 
-export function Hamburger({ open = false, ...rest }: HamburgerProps) {
+export function Hamburger({
+  open = false,
+  tapped = false,
+  ...rest
+}: HamburgerProps) {
   const { nodes, materials } = useGLTF(
     "/assets/models/hamburger.glb"
   ) as GLTFResult;
 
   return (
     <Center {...rest} dispose={null}>
-      <MotionConfig transition={{ ease: "anticipate", duration: 0.5 }}>
+      <MotionConfig transition={{ ease: "anticipate", duration: 0.3 }}>
         <motion.group
-          variants={{ open: { rotateZ: Math.PI * 2 } }}
-          animate={open ? "open" : "closed"}
+          variants={{ open: { rotateZ: Math.PI * 2 }, tapped: { scale: 0.9 } }}
+          animate={[open ? "open" : "closed", tapped ? "tapped" : "untapped"]}
         >
           <motion.group
-            variants={{ open: { y: offset } }}
-            animate={open ? "open" : "closed"}
+            variants={{ open: { y: offset }, tapped: { y: offset / 2 } }}
+            animate={open ? (tapped ? "tapped" : "open") : "closed"}
           >
             <mesh geometry={nodes.BunTop_1.geometry} material={materials.Bun} />
             <mesh
@@ -73,8 +78,8 @@ export function Hamburger({ open = false, ...rest }: HamburgerProps) {
           </group>
 
           <motion.group
-            variants={{ open: { y: -offset } }}
-            animate={open ? "open" : "closed"}
+            variants={{ open: { y: -offset }, tapped: { y: -offset / 2 } }}
+            animate={open ? (tapped ? "tapped" : "open") : "closed"}
           >
             <mesh
               geometry={nodes.Lettuce.geometry}
