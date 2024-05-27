@@ -49,22 +49,28 @@ export default function Home() {
   return (
     <ThreeLayout>
       <main>
-        <Sheet>
-          <SheetTrigger className="fixed top-6 left-6">
-            <HamburgerButton className="size-12" />
-          </SheetTrigger>
-          <SheetContent side={"left"}>
-            <SheetHeader>
-              <SheetTitle>Experiments</SheetTitle>
-            </SheetHeader>
-            <div className="flex flex-col">
-              <Link href="/">Home</Link>
-              <Link href="/hamburgermenu">Hamburger Menu</Link>
-            </div>
-          </SheetContent>
-        </Sheet>
+        <NavigationDrawer />
         {/* <h1 className="text-3xl font-bold text-center">Hamburger menu</h1> */}
       </main>
     </ThreeLayout>
+  );
+}
+
+function NavigationDrawer() {
+  return (
+    <Sheet>
+      <SheetTrigger className="fixed top-6 left-6">
+        <HamburgerButton className="size-12" />
+      </SheetTrigger>
+      <SheetContent side={"left"}>
+        <SheetHeader>
+          <SheetTitle>Experiments</SheetTitle>
+        </SheetHeader>
+        <div className="flex flex-col">
+          <Link href="/">Home</Link>
+          <Link href="/hamburgermenu">Hamburger Menu</Link>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
