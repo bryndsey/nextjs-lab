@@ -1,16 +1,9 @@
 "use client";
 
 import { ThreeLayout } from "@/components/ThreeLayout";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { HamburgerButton } from "./HamburgerButton";
+import { NavigationDrawer } from "../../../components/NavigationDrawer";
 export const Hamburger = dynamic(
   () => import("./Hamburger").then((mod) => mod.Hamburger),
   { ssr: false }
@@ -47,33 +40,11 @@ export const View = dynamic(
 
 export default function Home() {
   return (
-    <ThreeLayout>
-      <main>
-        <NavigationDrawer />
-        <h1 className="text-3xl font-bold text-center">Hamburger menu</h1>
-        <div className="flex justify-center">
-          <HamburgerButton className="size-48" />
-        </div>
-      </main>
-    </ThreeLayout>
-  );
-}
-
-function NavigationDrawer() {
-  return (
-    <Sheet>
-      <SheetTrigger className="fixed top-6 left-6">
-        <HamburgerButton className="size-12" />
-      </SheetTrigger>
-      <SheetContent side={"left"}>
-        <SheetHeader>
-          <SheetTitle>Experiments</SheetTitle>
-        </SheetHeader>
-        <div className="flex flex-col">
-          <Link href="/">Home</Link>
-          <Link href="/hamburgermenu">Hamburger Menu</Link>
-        </div>
-      </SheetContent>
-    </Sheet>
+    <main>
+      <h1 className="text-3xl font-bold text-center">Hamburger menu</h1>
+      <div className="flex justify-center">
+        <HamburgerButton className="size-48" />
+      </div>
+    </main>
   );
 }

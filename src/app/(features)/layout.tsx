@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { NavigationDrawer } from "@/components/NavigationDrawer";
+import { ThreeLayout } from "@/components/ThreeLayout";
 
 export default function ExperiementLayout({
   children,
@@ -6,9 +7,9 @@ export default function ExperiementLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <Link href="/">Home</Link>
+    <ThreeLayout>
+      <NavigationDrawer />
       {children}
-    </>
+    </ThreeLayout>
   );
 }
