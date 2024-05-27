@@ -1,8 +1,8 @@
 "use client";
-import { OrthographicCamera } from "@react-three/drei";
+import { PerspectiveCamera } from "@react-three/drei";
 import { motion } from "framer-motion";
 import { Suspense, useState } from "react";
-import { View, Hamburger } from "./page";
+import { Hamburger, View } from "./page";
 
 interface HamburgerButtonProps {
   className?: string;
@@ -26,8 +26,8 @@ export function HamburgerButton(props: HamburgerButtonProps) {
           <Hamburger open={isHovered} tapped={isTapped} />
           <ambientLight intensity={1.25} />
           <pointLight intensity={2} position={[0.2, 1, 1]} />
-          <OrthographicCamera makeDefault position={[0, 0, 1]} zoom={1000} />
         </Suspense>
+        <PerspectiveCamera fov={5} makeDefault position={[0, 0, 2.5]} />
       </View>
     </motion.div>
   );
