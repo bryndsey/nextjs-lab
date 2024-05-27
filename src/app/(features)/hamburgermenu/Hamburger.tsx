@@ -51,11 +51,20 @@ export function Hamburger({
     <Center {...rest} dispose={null}>
       <MotionConfig transition={{ ease: "anticipate", duration: 0.3 }}>
         <motion.group
-          variants={{ open: { rotateZ: Math.PI * 2 }, tapped: { scale: 0.9 } }}
+          variants={{
+            open: {
+              rotateZ: Math.PI * 2,
+              transition: { ease: "anticipate", duration: 0.4 },
+            },
+            tapped: { scale: 0.9, transition: { duration: 0.05 } },
+          }}
           animate={[open ? "open" : "closed", tapped ? "tapped" : "untapped"]}
         >
           <motion.group
-            variants={{ open: { y: offset }, tapped: { y: offset / 2 } }}
+            variants={{
+              open: { y: offset },
+              tapped: { y: offset / 2, transition: { duration: 0.05 } },
+            }}
             animate={open ? (tapped ? "tapped" : "open") : "closed"}
           >
             <mesh geometry={nodes.BunTop_1.geometry} material={materials.Bun} />
@@ -78,7 +87,10 @@ export function Hamburger({
           </group>
 
           <motion.group
-            variants={{ open: { y: -offset }, tapped: { y: -offset / 2 } }}
+            variants={{
+              open: { y: -offset },
+              tapped: { y: -offset / 2, transition: { duration: 0.05 } },
+            }}
             animate={open ? (tapped ? "tapped" : "open") : "closed"}
           >
             <mesh
