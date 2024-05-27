@@ -27,7 +27,7 @@ export function HamburgerButton(props: HamburgerButtonProps) {
           <ambientLight intensity={1.25} />
           <pointLight intensity={2} position={[0.2, 1, 1]} />
         </Suspense>
-        <PerspectiveCamera fov={5} makeDefault position={[0, 0, 2.5]} />
+        <PerspectiveCamera fov={10} makeDefault position={[0, 0, 1.5]} />
       </View>
     </motion.div>
   );
