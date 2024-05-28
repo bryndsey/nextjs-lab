@@ -23,6 +23,7 @@ export function NavigationDrawer() {
         <div className="flex flex-col">
           <Link href="/">Home</Link>
           <Link href="/hamburgermenu">Hamburger Menu</Link>
+          <Link href="/fluidsim">Fluid Simulation</Link>
         </div>
       </SheetContent>
     </Sheet>
