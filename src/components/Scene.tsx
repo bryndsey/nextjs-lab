@@ -13,16 +13,8 @@ export default function Scene({ ...props }) {
       {...props}
       // onCreated={(state) => (state.gl.toneMapping = THREE.AgXToneMapping)}
     >
-      <color attach="background" args={["blue"]} />
-      <EffectComposer>
-        {/* <Vignette offset={0.1} darkness={1.1} /> */}
-        <FluidSimPPEffect />
-      </EffectComposer>
-      {/* <View.Port /> */}
+      <View.Port />
       <r3f.Out />
-      <Sphere args={[2, 32, 32]} position={[-1, 1, 0]}>
-        <meshBasicMaterial color={"green"} />
-      </Sphere>
       <Preload all />
     </Canvas>
   );
