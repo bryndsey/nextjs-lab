@@ -41,12 +41,12 @@ export default function FluidSimPage() {
   return (
     <main>
       <h1 className="text-3xl font-bold text-center">Fluid Simulation</h1>
-      <View className="h-48 w-full">
+      <View index={1} className="h-48 w-full">
         <FluidSim />
-        <Sphere args={[1, 32, 32]}>
+        {/* <Sphere args={[1, 32, 32]}>
           <meshBasicMaterial color={"green"} />
           <PerspectiveCamera makeDefault position={[0, 0, 3]} />
-        </Sphere>
+        </Sphere> */}
       </View>
     </main>
   );
