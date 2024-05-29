@@ -41,6 +41,7 @@ export const View = dynamic(
 export default function Home() {
   return (
     <main>
+      <NavigationDrawer />
       <h1 className="text-3xl font-bold text-center">Hamburger menu</h1>
       <div className="flex justify-center">
         <HamburgerButton className="size-48" />

@@ -1,7 +1,9 @@
 "use client";
 
-import { PerspectiveCamera, Sphere } from "@react-three/drei";
+import { NavigationDrawer } from "@/components/NavigationDrawer";
+import { EffectComposer } from "@react-three/postprocessing";
 import dynamic from "next/dynamic";
+import { FluidSimPPEffect } from "./FluidSim";
 export const View = dynamic(
   () => import("@react-three/drei").then((mod) => mod.View),
   {
@@ -31,23 +33,16 @@ export const View = dynamic(
     ),
   }
 );
-// import { FluidSim } from "./FluidSim";
-export const FluidSim = dynamic(
-  () => import("./FluidSim").then((mod) => mod.FluidSim),
-  { ssr: false }
-);
 
 export default function FluidSimPage() {
   return (
-    <main>
-      <h1 className="text-3xl font-bold text-center">Fluid Simulation</h1>
-      <View index={1} className="h-48 w-full">
-        <FluidSim />
-        {/* <Sphere args={[1, 32, 32]}>
-          <meshBasicMaterial color={"green"} />
-          <PerspectiveCamera makeDefault position={[0, 0, 3]} />
-        </Sphere> */}
+    <main className="h-[100dvh] w-full">
+      <View id="fluidSim" index={0} className="h-[100dvh] w-full">
+        <EffectComposer>
+          <FluidSimPPEffect />
+        </EffectComposer>
       </View>
+      <NavigationDrawer />
     </main>
   );
 }
