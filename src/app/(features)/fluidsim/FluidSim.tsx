@@ -89,25 +89,34 @@ class FluidSimEffect extends Effect {
   initialize(renderer: WebGLRenderer, alpha: boolean, frameBufferType: number) {
     // super.initialize(renderer, alpha, frameBufferType);
 
-    this.fluid = new Fluid(renderer);
+    this.fluid = new Fluid(renderer, { radius: 0.25 });
     // this.uniforms.get("tFluid")!.value = this.fluid.uniform;
-    this.fluid.splatMaterial.uniforms.uAspect = 1;
+
+    // For some reason, this causes a line at the given y value as opposed to a circle
+    // this.fluid.splatMaterial.uniforms.uAspect = 1;
     this.uniforms.get("tFluid")!.value = this.fluid.uniform.value;
     console.log(this.fluid);
   }
+
+  iteration = 0;
 
   update(
     renderer: WebGLRenderer,
     inputBuffer: WebGLRenderTarget,
     deltaTime?: number
   ) {
-    this.fluid.splats.push({
-      // Get mouse value in 0 to 1 range, with Y flipped
-      x: 0.25,
-      y: 0.5,
-      dx: 10,
-      dy: 10,
-    });
+    // this.iteration++;
+    if (this.iteration++ % 50 === 49) {
+      //   console.log("Pushing new splat");
+      this.fluid.splats.push({
+        // Get mouse value in 0 to 1 range, with Y flipped
+        x: 0.75,
+        y: 0.5,
+        dx: Math.random() * 100 - 50,
+        dy: Math.random() * 100 - 50,
+      });
+      this.iteration = 0;
+    }
     // console.log(this.fluid.splats);
     this.fluid.update();
     this.uniforms.get("tFluid")!.value = this.fluid.uniform.value;
