@@ -50,13 +50,11 @@ const fragmentShader = /* glsl */ `
                             vec3 fluid = texture(tFluid, uv).rgb;
                             vec2 offsetUv = uv - fluid.rg * 0.0002;
 
-                            // outputColor = vec4(fluid * 0.1 + 0.5, 1);
-                            outputColor = mix( texture2D(tScene, offsetUv), vec4(fluid * 0.1 + 0.5, 1), step(0.5, vUv.x) ) ;
+                            outputColor = vec4(fluid * 0.1 + 0.5, 1);
+                            // outputColor = mix( texture2D(tScene, offsetUv), vec4(fluid * 0.1 + 0.5, 1), step(0.5, vUv.x) ) ;
                         }
                         `;
 //                            outputColor = vec4(fluid * 0.1 + 0.5, 1);
-let _uSceneParam: number;
-let _uFluidParam: number;
 
 class FluidSimEffect extends Effect {
   fluid: Fluid;
@@ -75,7 +73,6 @@ class FluidSimEffect extends Effect {
     // For some reason, this causes a line at the given y value as opposed to a circle
     // this.fluid.splatMaterial.uniforms.uAspect = 1;
     this.uniforms.get("tFluid")!.value = this.fluid.uniform.value;
-    console.log(this.fluid);
   }
 
   update(
@@ -110,6 +107,7 @@ export const FluidSimPPEffect = forwardRef((props, ref) => {
       lastMouseRef.current = { x: state.pointer.x, y: state.pointer.y };
     }
   });
+
   const effect = useMemo(() => effectRef.current, []);
   return <primitive ref={ref} object={effect} dispose={null} />;
 });
