@@ -66,31 +66,11 @@ class FluidSimEffect extends Effect {
         ["tScene", new Uniform<Texture | null>(null)],
         ["tFluid", new Uniform<Texture | null>(null)],
       ]),
-      //   blendFunction: NoBlending,
-
-      //   vertexShader: /* glsl */ `
-      //                     in vec3 position;
-      //                     in vec2 uv;
-
-      //                     out vec2 vUv;
-
-      //                     void main() {
-      //                         vUv = uv;
-
-      //                         gl_Position = vec4(position, 1.0);
-      //                     }
-      //                 `,
     });
-
-    // _uSceneParam = sceneParam;
-    // _uFluidParam = fluidParam;
   }
 
   initialize(renderer: WebGLRenderer, alpha: boolean, frameBufferType: number) {
-    // super.initialize(renderer, alpha, frameBufferType);
-
     this.fluid = new Fluid(renderer, { radius: 0.25 });
-    // this.uniforms.get("tFluid")!.value = this.fluid.uniform;
 
     // For some reason, this causes a line at the given y value as opposed to a circle
     // this.fluid.splatMaterial.uniforms.uAspect = 1;
@@ -98,36 +78,39 @@ class FluidSimEffect extends Effect {
     console.log(this.fluid);
   }
 
-  iteration = 0;
-
   update(
     renderer: WebGLRenderer,
     inputBuffer: WebGLRenderTarget,
     deltaTime?: number
   ) {
-    // this.iteration++;
-    if (this.iteration++ % 50 === 49) {
-      //   console.log("Pushing new splat");
-      this.fluid.splats.push({
-        // Get mouse value in 0 to 1 range, with Y flipped
-        x: 0.75,
-        y: 0.5,
-        dx: Math.random() * 100 - 50,
-        dy: Math.random() * 100 - 50,
-      });
-      this.iteration = 0;
-    }
-    // console.log(this.fluid.splats);
     this.fluid.update();
     this.uniforms.get("tFluid")!.value = this.fluid.uniform.value;
-    // console.log(this.uniforms.get("tFluid").value);
-    // console.log(this.fluid.uniform);
     this.uniforms.get("tScene")!.value = inputBuffer.texture;
+  }
+
+  addSplat(x: number, y: number, dx: number, dy: number) {
+    this.fluid.splats.push({ x, y, dx, dy });
   }
 }
 
 export const FluidSimPPEffect = forwardRef((props, ref) => {
-  const effect = useMemo(() => new FluidSimEffect(), []);
+  const effectRef = useRef<FluidSimEffect>(new FluidSimEffect());
+  const lastMouseRef = useRef({ x: 0, y: 0 });
+  useFrame((state) => {
+    if (
+      state.pointer.x !== lastMouseRef.current.x ||
+      state.pointer.y !== lastMouseRef.current.y
+    ) {
+      effectRef.current.addSplat(
+        (state.pointer.x + 1) / 2,
+        (state.pointer.y + 1) / 2,
+        (state.pointer.x - lastMouseRef.current.x) * 1000,
+        (state.pointer.y - lastMouseRef.current.y) * 1000
+      );
+      lastMouseRef.current = { x: state.pointer.x, y: state.pointer.y };
+    }
+  });
+  const effect = useMemo(() => effectRef.current, []);
   return <primitive ref={ref} object={effect} dispose={null} />;
 });
 
