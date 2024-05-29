@@ -92,7 +92,7 @@ class FluidSimEffect extends Effect {
     this.fluid = new Fluid(renderer);
     // this.uniforms.get("tFluid")!.value = this.fluid.uniform;
     this.fluid.splatMaterial.uniforms.uAspect = 1;
-    this.uniforms.get("tFluid")!.value = this.fluid.uniform;
+    this.uniforms.get("tFluid")!.value = this.fluid.uniform.value;
     console.log(this.fluid);
   }
 
@@ -110,7 +110,7 @@ class FluidSimEffect extends Effect {
     });
     // console.log(this.fluid.splats);
     this.fluid.update();
-    this.uniforms.get("tFluid")!.value = this.fluid.uniform;
+    this.uniforms.get("tFluid")!.value = this.fluid.uniform.value;
     // console.log(this.uniforms.get("tFluid").value);
     // console.log(this.fluid.uniform);
     this.uniforms.get("tScene")!.value = inputBuffer.texture;
