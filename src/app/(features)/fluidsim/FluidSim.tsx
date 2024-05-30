@@ -31,8 +31,9 @@ const fragmentShader = /* glsl */ `
                         void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
                             vec3 fluid = texture(tFluid, uv).rgb;
                             vec2 offsetUv = uv - fluid.rg * 0.0002;
+                            float average = 0.025 * (abs(fluid.r) + abs(fluid.g) + abs(fluid.b)) / 3.0;
 
-                            outputColor = vec4(fluid * 0.1 + 0.5, 1);
+                            outputColor = vec4(average, average, average, 1);
                             // outputColor = mix( texture2D(tScene, offsetUv), vec4(fluid * 0.1 + 0.5, 1), step(0.5, vUv.x) ) ;
                         }
                         `;
