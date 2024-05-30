@@ -21,7 +21,7 @@ export function HamburgerButton(props: HamburgerButtonProps) {
       onTapCancel={() => setIsTapped(false)}
       {...props}
     >
-      <View id="burgerButton" className="scale-150 w-full h-full">
+      <View id="burgerButton" index={999} className="scale-150 w-full h-full">
         <Suspense fallback={null}>
           <Hamburger open={isHovered} tapped={isTapped} />
           <ambientLight intensity={1.25} />
