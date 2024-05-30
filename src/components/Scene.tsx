@@ -1,9 +1,11 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Preload, View } from "@react-three/drei";
+import { Preload, Sphere, View } from "@react-three/drei";
 import * as THREE from "three";
 import { r3f } from "./r3f";
+import { EffectComposer, Vignette } from "@react-three/postprocessing";
+import { FluidSimPPEffect } from "@/app/(features)/fluidsim/FluidSim";
 
 export default function Scene({ ...props }) {
   return (

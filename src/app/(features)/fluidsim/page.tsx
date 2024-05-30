@@ -1,13 +1,9 @@
 "use client";
 
-import { ThreeLayout } from "@/components/ThreeLayout";
+import { NavigationDrawer } from "@/components/NavigationDrawer";
+import { EffectComposer } from "@react-three/postprocessing";
 import dynamic from "next/dynamic";
-import { HamburgerButton } from "./HamburgerButton";
-import { NavigationDrawer } from "../../../components/NavigationDrawer";
-export const Hamburger = dynamic(
-  () => import("./Hamburger").then((mod) => mod.Hamburger),
-  { ssr: false }
-);
+import { FluidSimPPEffect } from "./FluidSim";
 export const View = dynamic(
   () => import("@react-three/drei").then((mod) => mod.View),
   {
@@ -38,14 +34,15 @@ export const View = dynamic(
   }
 );
 
-export default function Home() {
+export default function FluidSimPage() {
   return (
-    <main>
+    <main className="h-[100dvh] w-full">
+      <View id="fluidSim" index={0} className="h-[100dvh] w-full">
+        <EffectComposer>
+          <FluidSimPPEffect />
+        </EffectComposer>
+      </View>
       <NavigationDrawer />
-      <h1 className="text-3xl font-bold text-center">Hamburger menu</h1>
-      <div className="flex justify-center">
-        <HamburgerButton className="size-48" />
-      </div>
     </main>
   );
 }
